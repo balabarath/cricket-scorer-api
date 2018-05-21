@@ -1,29 +1,28 @@
 package com.tw.cricketScorer.game;
 
+import com.tw.cricketScorer.player.Player;
+import com.tw.cricketScorer.team.Team;
 import cricketScorer.db.gen.tables.records.GameRecord;
 
+import javax.naming.NamingException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Game {
+    private List<Team> teams;
     private String team1;
     private String team2;
 
-    public Game(GameRecord gameRecord) {
-        this.team1 = gameRecord.getTeam1();
-        this.team2 = gameRecord.getTeam2();
+    public Game(GameRecord gameRecord, List<Player> team1Players, List<Player> team2Players) {
+        teams = new ArrayList<>();
+        teams.add(new Team(gameRecord.getTeam1(),team1Players,true));
+        teams.add(new Team(gameRecord.getTeam2(),team2Players,false));
+
     }
 
-    public String getTeam1() {
-        return team1;
-    }
 
-    public void setTeam1(String team1) {
-        this.team1 = team1;
-    }
+    public List<Team> getTeams() {
 
-    public String getTeam2() {
-        return team2;
-    }
-
-    public void setTeam2(String team2) {
-        this.team2 = team2;
+        return teams;
     }
 }

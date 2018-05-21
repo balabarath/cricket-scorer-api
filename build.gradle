@@ -1,0 +1,91 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.2.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+		jcenter()
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath 'com.h2database:h2:1.4.197'
+		classpath 'nu.studer:gradle-jooq-plugin:2.0.11'
+		classpath "gradle.plugin.com.boxfuse.client:flyway-release:4.0.3"
+	}
+}
+
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'nu.studer.jooq'
+apply plugin: "org.flywaydb.flyway"
+
+group = 'com.tw'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 10
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-jooq')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('com.h2database:h2:1.4.197')
+	compile('org.flywaydb:flyway-core:4.0.3')
+	jooqRuntime('com.h2database:h2:1.4.197')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile("org.assertj:assertj-core:3.10.0")
+	compile "org.jooq:jooq:3.10.7"
+	jooqRuntime "com.sun.activation:javax.activation:1.2.0"
+	jooqRuntime "org.glassfish.jaxb:jaxb-runtime:2.2.11"
+}
+
+jooq {
+	cricketScorer(sourceSets.main) {
+		jdbc {
+			driver = 'org.h2.Driver'
+			url = 'jdbc:h2:./genDB'
+			user = 'user'
+			password = 'password'
+			schema = 'public'
+		}
+		generator {
+			name = 'org.jooq.util.DefaultGenerator'
+			strategy {
+				name = 'org.jooq.util.DefaultGeneratorStrategy'
+			}
+			database {
+				name = 'org.jooq.util.h2.H2Database'
+				inputSchema = 'public'
+			}
+			generate {
+				relations = true
+				deprecated = false
+				records = true
+				immutablePojos = false
+				fluentSetters = true
+			}
+			target {
+				packageName = 'cricketScorer.db.gen'
+				directory = 'src/main/generated/java'
+			}
+		}
+	}
+}
+
+flyway {
+	url = 'jdbc:h2:./genDB'
+	user = 'user'
+	password = 'password'
+	schemas = ['public']
+	locations = ["filesystem:$project.projectDir/src/main/resources/db/migration"]
+}
+
+generateCricketScorerJooqSchemaSource.dependsOn flywayMigrate

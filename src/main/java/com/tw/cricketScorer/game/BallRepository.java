@@ -1,26 +1,30 @@
 package com.tw.cricketScorer.game;
 
-import cricketScorer.db.gen.tables.records.GameRecord;
+import cricketScorer.db.gen.tables.records.BallRecord;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import static cricketScorer.db.gen.tables.Game.GAME;
+import java.util.UUID;
+
+import static cricketScorer.db.gen.tables.Ball.BALL;
 
 @Repository
 @Transactional
-public class GameRepository {
+public class BallRepository {
+
 
     private DSLContext dsl;
 
     @Autowired
-    public GameRepository(DSLContext dsl) {
+    public BallRepository(DSLContext dsl) {
         this.dsl = dsl;
     }
 
+    public void save(BallRecord ball) {
+        ball.setId(UUID.randomUUID());
+        dsl.insertInto(BALL).set(ball).execute();
 
-    public GameRecord getGameInformation() {
-        return dsl.selectFrom(GAME).fetchOne();
     }
 }

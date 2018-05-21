@@ -4,7 +4,9 @@
 package cricketScorer.db.gen;
 
 
+import cricketScorer.db.gen.tables.Ball;
 import cricketScorer.db.gen.tables.Game;
+import cricketScorer.db.gen.tables.Over;
 import cricketScorer.db.gen.tables.Players;
 import cricketScorer.db.gen.tables.SchemaVersion;
 import cricketScorer.db.gen.tables.Team;
@@ -33,9 +35,16 @@ public class Indexes {
     // INDEX definitions
     // -------------------------------------------------------------------------
 
+    public static final Index CONSTRAINT_INDEX_1 = Indexes0.CONSTRAINT_INDEX_1;
+    public static final Index CONSTRAINT_INDEX_1E = Indexes0.CONSTRAINT_INDEX_1E;
+    public static final Index CONSTRAINT_INDEX_1EF = Indexes0.CONSTRAINT_INDEX_1EF;
+    public static final Index PRIMARY_KEY_1 = Indexes0.PRIMARY_KEY_1;
     public static final Index CONSTRAINT_INDEX_2 = Indexes0.CONSTRAINT_INDEX_2;
     public static final Index CONSTRAINT_INDEX_21 = Indexes0.CONSTRAINT_INDEX_21;
     public static final Index PRIMARY_KEY_21 = Indexes0.PRIMARY_KEY_21;
+    public static final Index CONSTRAINT_INDEX_25 = Indexes0.CONSTRAINT_INDEX_25;
+    public static final Index CONSTRAINT_INDEX_253 = Indexes0.CONSTRAINT_INDEX_253;
+    public static final Index PRIMARY_KEY_25 = Indexes0.PRIMARY_KEY_25;
     public static final Index CONSTRAINT_INDEX_D = Indexes0.CONSTRAINT_INDEX_D;
     public static final Index PRIMARY_KEY_D = Indexes0.PRIMARY_KEY_D;
     public static final Index PRIMARY_KEY_2 = Indexes0.PRIMARY_KEY_2;
@@ -47,9 +56,16 @@ public class Indexes {
     // -------------------------------------------------------------------------
 
     private static class Indexes0 extends AbstractKeys {
+        public static Index CONSTRAINT_INDEX_1 = createIndex("CONSTRAINT_INDEX_1", Ball.BALL, new OrderField[] { Ball.BALL.TEAM_NAME }, false);
+        public static Index CONSTRAINT_INDEX_1E = createIndex("CONSTRAINT_INDEX_1E", Ball.BALL, new OrderField[] { Ball.BALL.OVER_ID }, false);
+        public static Index CONSTRAINT_INDEX_1EF = createIndex("CONSTRAINT_INDEX_1EF", Ball.BALL, new OrderField[] { Ball.BALL.BATSMAN_ID }, false);
+        public static Index PRIMARY_KEY_1 = createIndex("PRIMARY_KEY_1", Ball.BALL, new OrderField[] { Ball.BALL.ID }, true);
         public static Index CONSTRAINT_INDEX_2 = createIndex("CONSTRAINT_INDEX_2", Game.GAME, new OrderField[] { Game.GAME.TEAM1 }, false);
         public static Index CONSTRAINT_INDEX_21 = createIndex("CONSTRAINT_INDEX_21", Game.GAME, new OrderField[] { Game.GAME.TEAM2 }, false);
         public static Index PRIMARY_KEY_21 = createIndex("PRIMARY_KEY_21", Game.GAME, new OrderField[] { Game.GAME.ID }, true);
+        public static Index CONSTRAINT_INDEX_25 = createIndex("CONSTRAINT_INDEX_25", Over.OVER, new OrderField[] { Over.OVER.TEAM_NAME }, false);
+        public static Index CONSTRAINT_INDEX_253 = createIndex("CONSTRAINT_INDEX_253", Over.OVER, new OrderField[] { Over.OVER.GAME }, false);
+        public static Index PRIMARY_KEY_25 = createIndex("PRIMARY_KEY_25", Over.OVER, new OrderField[] { Over.OVER.ID }, true);
         public static Index CONSTRAINT_INDEX_D = createIndex("CONSTRAINT_INDEX_D", Players.PLAYERS, new OrderField[] { Players.PLAYERS.TEAM_NAME }, false);
         public static Index PRIMARY_KEY_D = createIndex("PRIMARY_KEY_D", Players.PLAYERS, new OrderField[] { Players.PLAYERS.ID }, true);
         public static Index PRIMARY_KEY_2 = createIndex("PRIMARY_KEY_2", Team.TEAM, new OrderField[] { Team.TEAM.TEAM_NAME }, true);

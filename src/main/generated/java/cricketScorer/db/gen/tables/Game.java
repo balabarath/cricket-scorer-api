@@ -38,7 +38,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Game extends TableImpl<GameRecord> {
 
-    private static final long serialVersionUID = 794452637;
+    private static final long serialVersionUID = -1017974216;
 
     /**
      * The reference instance of <code>public.GAME</code>
@@ -76,7 +76,7 @@ public class Game extends TableImpl<GameRecord> {
     /**
      * The column <code>public.GAME.GAME_TYPE</code>.
      */
-    public final TableField<GameRecord, String> GAME_TYPE = createField("GAME_TYPE", org.jooq.impl.SQLDataType.CHAR(4), this, "");
+    public final TableField<GameRecord, String> GAME_TYPE = createField("GAME_TYPE", org.jooq.impl.SQLDataType.CHAR(10), this, "");
 
     /**
      * Create a <code>public.GAME</code> table reference

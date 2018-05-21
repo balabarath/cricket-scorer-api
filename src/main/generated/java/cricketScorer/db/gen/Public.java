@@ -4,7 +4,9 @@
 package cricketScorer.db.gen;
 
 
+import cricketScorer.db.gen.tables.Ball;
 import cricketScorer.db.gen.tables.Game;
+import cricketScorer.db.gen.tables.Over;
 import cricketScorer.db.gen.tables.Players;
 import cricketScorer.db.gen.tables.SchemaVersion;
 import cricketScorer.db.gen.tables.Team;
@@ -33,7 +35,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-    private static final long serialVersionUID = -83693749;
+    private static final long serialVersionUID = 1257937003;
 
     /**
      * The reference instance of <code>public</code>
@@ -41,9 +43,19 @@ public class Public extends SchemaImpl {
     public static final Public PUBLIC = new Public();
 
     /**
+     * The table <code>public.BALL</code>.
+     */
+    public final Ball BALL = cricketScorer.db.gen.tables.Ball.BALL;
+
+    /**
      * The table <code>public.GAME</code>.
      */
     public final Game GAME = cricketScorer.db.gen.tables.Game.GAME;
+
+    /**
+     * The table <code>public.OVER</code>.
+     */
+    public final Over OVER = cricketScorer.db.gen.tables.Over.OVER;
 
     /**
      * The table <code>public.PLAYERS</code>.
@@ -85,7 +97,9 @@ public class Public extends SchemaImpl {
 
     private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
+            Ball.BALL,
             Game.GAME,
+            Over.OVER,
             Players.PLAYERS,
             Team.TEAM,
             SchemaVersion.SCHEMA_VERSION);

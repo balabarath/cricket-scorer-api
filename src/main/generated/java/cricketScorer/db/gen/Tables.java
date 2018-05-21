@@ -4,7 +4,9 @@
 package cricketScorer.db.gen;
 
 
+import cricketScorer.db.gen.tables.Ball;
 import cricketScorer.db.gen.tables.Game;
+import cricketScorer.db.gen.tables.Over;
 import cricketScorer.db.gen.tables.Players;
 import cricketScorer.db.gen.tables.SchemaVersion;
 import cricketScorer.db.gen.tables.Team;
@@ -26,9 +28,19 @@ import javax.annotation.Generated;
 public class Tables {
 
     /**
+     * The table <code>public.BALL</code>.
+     */
+    public static final Ball BALL = cricketScorer.db.gen.tables.Ball.BALL;
+
+    /**
      * The table <code>public.GAME</code>.
      */
     public static final Game GAME = cricketScorer.db.gen.tables.Game.GAME;
+
+    /**
+     * The table <code>public.OVER</code>.
+     */
+    public static final Over OVER = cricketScorer.db.gen.tables.Over.OVER;
 
     /**
      * The table <code>public.PLAYERS</code>.

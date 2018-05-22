@@ -1,4 +1,4 @@
-package com.tw.cricketScorer.game;
+package com.tw.cricketScorer.game.score;
 
 
 import cricketScorer.db.gen.tables.records.OverRecord;
@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import static cricketScorer.db.gen.tables.Over.OVER;
@@ -26,7 +27,6 @@ public class OverRepository {
 
     public void save(OverRecord overRecord) {
         try {
-            overRecord.setId(UUID.randomUUID());
             dsl.insertInto(OVER).set(overRecord).execute();
         }
         catch (Exception e) {
@@ -35,8 +35,8 @@ public class OverRepository {
 
     }
 
-    public OverRecord getOverDetails(Integer overRecordNumber, String teamName) {
-        return dsl.selectFrom(OVER).where(OVER.NUMBER.eq(overRecordNumber))
-                .and(OVER.TEAM_NAME.eq(teamName)).fetchOne();
+    public Optional<OverRecord> getOverDetails(Integer overNumber, String teamName) {
+        return Optional.ofNullable(dsl.selectFrom(OVER).where(OVER.NUMBER.eq(overNumber))
+                .and(OVER.TEAM_NAME.eq(teamName)).fetchOne());
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import static cricketScorer.db.gen.tables.Players.PLAYERS;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -31,5 +32,9 @@ public class PlayerRepository {
                 .fetchInto(PlayersRecord.class)).stream()
                 .map(s-> new Player(s.getId(),s.getName()))
                 .collect(Collectors.toList());
+    }
+
+    public PlayersRecord getPlayer(UUID playerId) {
+        return dsl.selectFrom(PLAYERS).where(PLAYERS.ID.eq(playerId)).fetchOne();
     }
 }

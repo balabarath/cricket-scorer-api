@@ -1,5 +1,8 @@
-package com.tw.cricketScorer.game;
+package com.tw.cricketScorer.game.score;
 
+import com.tw.cricketScorer.game.GameRepository;
+import com.tw.cricketScorer.game.score.BallRepository;
+import com.tw.cricketScorer.game.score.OverRepository;
 import cricketScorer.db.gen.tables.records.BallRecord;
 import cricketScorer.db.gen.tables.records.GameRecord;
 import cricketScorer.db.gen.tables.records.OverRecord;
@@ -47,7 +50,7 @@ public class BallRepositoryTest {
         overRepository.save(overRecord);
 
 
-        OverRecord over = overRepository.getOverDetails(1, game.getTeam1());
+        OverRecord over = overRepository.getOverDetails(1, game.getTeam1()).get();
         BallRecord ball = new BallRecord();
 
         ball.setTeamName(game.getTeam1());

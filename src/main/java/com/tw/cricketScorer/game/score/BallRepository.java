@@ -1,4 +1,4 @@
-package com.tw.cricketScorer.game;
+package com.tw.cricketScorer.game.score;
 
 import cricketScorer.db.gen.tables.records.BallRecord;
 import org.jooq.DSLContext;

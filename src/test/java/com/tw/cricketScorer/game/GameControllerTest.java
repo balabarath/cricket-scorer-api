@@ -37,11 +37,13 @@ public class GameControllerTest {
     @Mock
     private ScoreService scoreService;
 
+    @Mock
+    private GameService gameService;
 
     @Test
     public void shouldSaveScoreData(){
 
-        GameController gameController = new GameController(gameRepository,playerRepository,scoreService);
+        GameController gameController = new GameController(gameRepository,playerRepository,scoreService, gameService);
         UUID gameId = UUID.randomUUID();
         UUID playerId = UUID.randomUUID();
         Score score = new Score(playerId, 5, 4, gameId);

@@ -25,10 +25,16 @@ public class GameTest {
 
         when(gameRecord.getTeam1()).thenReturn("Team 1");
         when(gameRecord.getTeam2()).thenReturn("Team 2");
-        var testTeam = new Team("Team 1",new ArrayList<>(), true);
+        var testTeam = new Team("Team 1",new ArrayList<>(), true,0,0,0);
         Game game = new Game(gameRecord,testTeam.getPlayers(),new ArrayList<Player>());
         assertEquals("Team 1",game.getTeams().get(0).toString());
         assertEquals(testTeam.getPlayers(),game.getTeams().get(0).getPlayers());
+
+        assertEquals(testTeam.getScore(),game.getTeams().get(0).getScore());
+
+        assertEquals(testTeam.getWickets(),game.getTeams().get(0).getWickets());
+
+        assertEquals(testTeam.getOvers(),game.getTeams().get(0).getOvers());
     }
 
     @Test
@@ -36,10 +42,15 @@ public class GameTest {
 
         when(gameRecord.getTeam1()).thenReturn("Team 1");
         when(gameRecord.getTeam2()).thenReturn("Team 2");
-        var testTeam = new Team("Team 2",new ArrayList<>(), true);
+        var testTeam = new Team("Team 2",new ArrayList<>(), true,0,0,0);
         Game game = new Game(gameRecord,testTeam.getPlayers(),testTeam.getPlayers());
         assertEquals(testTeam.toString(),game.getTeams().get(1).toString());
         assertEquals(testTeam.getPlayers(),game.getTeams().get(1).getPlayers());
+        assertEquals(testTeam.getScore(),game.getTeams().get(1).getScore());
+
+        assertEquals(testTeam.getWickets(),game.getTeams().get(1).getWickets());
+
+        assertEquals(testTeam.getOvers(),game.getTeams().get(1).getOvers());
     }
 
 }

@@ -6,26 +6,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/game")
+@RestController
 public class GameController {
 
-    private GameRepository gameRepository;
-    private PlayerRepository playerRepository;
+
+    private GameService gameService;
 
     @Autowired
-    public GameController(GameRepository gameRepository, PlayerRepository playerRepository) {
-        this.gameRepository = gameRepository;
-        this.playerRepository = playerRepository;
+    public GameController(GameService gameService) {
+
+        this.gameService = gameService;
     }
 
-    @GetMapping("")
+    @GetMapping("/game")
     public Game game() {
 
-       var team1= gameRepository.getGameInformation().getTeam1();
-       var team2 = gameRepository.getGameInformation().getTeam2();
-       return new Game(gameRepository.getGameInformation(),
-               playerRepository.getPlayers(team1),
-               playerRepository.getPlayers(team2));
+        return gameService.getGameRecord();
+
     }
 
 

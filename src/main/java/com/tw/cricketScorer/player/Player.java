@@ -4,28 +4,28 @@ import java.util.UUID;
 
 public class Player {
 
-    private UUID playerID;
-    private String Name;
+    private UUID id;
+    private String name;
 
 
     public Player(UUID id, String name)
     {
-        this.Name = name;
-        this.playerID = id;
+        this.name = name;
+        this.id = id;
     }
-    public UUID getPlayerID() {
-        return playerID;
+    public UUID getId() {
+        return id;
     }
 
-    public void setPlayerID(UUID playerID) {
-        this.playerID = playerID;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 }

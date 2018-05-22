@@ -15,8 +15,13 @@ public class Game {
 
     public Game(GameRecord gameRecord, List<Player> team1Players, List<Player> team2Players) {
         teams = new ArrayList<>();
-        teams.add(new Team(gameRecord.getTeam1(),team1Players,true));
-        teams.add(new Team(gameRecord.getTeam2(),team2Players,false));
+
+        teams.add(new Team(gameRecord.getTeam1(),team1Players,
+                true,
+                 gameRecord.getTeam1Score(),
+                 gameRecord.getTeam1Wickets()
+                ,gameRecord.getTeam1Overs()));
+        teams.add(new Team(gameRecord.getTeam2(),team2Players,false,gameRecord.getTeam2Score(),gameRecord.getTeam2Wickets(),gameRecord.getTeam2Overs()));
 
     }
 

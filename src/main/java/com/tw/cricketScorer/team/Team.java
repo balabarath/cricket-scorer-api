@@ -10,13 +10,13 @@ public class Team {
     private boolean isPlaying;
     private int  score;
     private int wickets;
-    private int overs;
+    private float overs;
     private String name;
     private List<Player> players;
 
 
 
-    public Team(String teamName, List<Player> players, boolean isPlaying,int score,int wickets,int overs){
+    public Team(String teamName, List<Player> players, boolean isPlaying,int score,int wickets,float overs){
         this.name = teamName;
         this.players = players;
         this.isPlaying = isPlaying;
@@ -39,9 +39,6 @@ public class Team {
         return name;
     }
 
-    public boolean getIsPlaying() {
-        return isPlaying;
-    }
 
     public void setPlaying(boolean playing) {
         isPlaying = playing;
@@ -64,11 +61,15 @@ public class Team {
         this.wickets = wickets;
     }
 
-    public int getOvers() {
+    public float getOvers() {
         return overs;
     }
 
     public void setOvers(int overs) {
         this.overs = overs;
+    }
+
+    public boolean getIsPlaying(){
+        return isPlaying;
     }
 }

@@ -20,8 +20,8 @@ public class Game {
                 true,
                  gameRecord.getTeam1Score(),
                  gameRecord.getTeam1Wickets()
-                ,gameRecord.getTeam1Overs()));
-        teams.add(new Team(gameRecord.getTeam2(),team2Players,false,gameRecord.getTeam2Score(),gameRecord.getTeam2Wickets(),gameRecord.getTeam2Overs()));
+                ,gameRecord.getTeam1Overs().floatValue()));
+        teams.add(new Team(gameRecord.getTeam2(),team2Players,false,gameRecord.getTeam2Score(),gameRecord.getTeam2Wickets(),gameRecord.getTeam2Overs().floatValue()));
 
     }
 

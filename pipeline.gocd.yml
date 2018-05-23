@@ -2,14 +2,14 @@ format_version: 2
 environments:
   ci:
     pipelines:
-      - "team1API"
+      - "bootcamp"
       
 pipelines:
-  "team1API":
+  "bootcamp":
     group: team1
     materials:
       ui:
-        git: "git@github.com:Sethuraman/bootcamp-just-cinemas-api.git"
+        git: "git@github.com:balabarath/cricket-scorer-api.git"
     stages:
       - buildAndTest:
           jobs:
@@ -18,7 +18,7 @@ pipelines:
                 - node-and-java
               tasks:
                 - script: |
-                    buildAndDeploy/build/build.sh team1
+                    buildAndDeploy/build/build.sh bootcamp
 
       - deploy:
            jobs:
@@ -27,4 +27,4 @@ pipelines:
                 - node-and-java
               tasks:
                 - script: |
-                    buildAndDeploy/deploy/deploy.sh team1 sethu-origin-key-pair
+                    buildAndDeploy/deploy/deploy.sh bootcamp sethu-ec2-key-pair

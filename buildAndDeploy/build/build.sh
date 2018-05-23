@@ -3,7 +3,7 @@
 #1. build
 #2. create s3 bucket for storing build artefacts if not already created
 #3. upload jar to s3 bucket suffixed with git commit hash
-#4. the jar can be then downloaded from here - https://s3.ap-south-1.amazonaws.com/build-artefacts-team1/bootcamp-just-cinemas-api-d505f5f.jar
+#4. the jar can be then downloaded from here - https://s3.ap-south-1.amazonaws.com/build-artefacts-team1/cricket-scorer-api-d505f5f.jar
 set -e
 tagName=$1
 
@@ -17,8 +17,8 @@ cfn-create-or-update \
 
 commitHash=$(git rev-parse --short HEAD)
 mkdir -p build/distribution
-cp build/libs/bootcamp-just-cinemas-api.jar build/distribution
+cp build/libs/cricket-scorer-api.jar build/distribution
 cp buildAndDeploy/deploy/Dockerfile build/distribution
 cp buildAndDeploy/deploy/docker-compose.yml build/distribution
-tar -C build/distribution -czvf build/bootcamp-just-cinemas-api-$commitHash.tar .
-aws s3 cp build/bootcamp-just-cinemas-api-$commitHash.tar s3://build-artefacts-${tagName}/bootcamp-just-cinemas-api-$commitHash.tar
+tar -C build/distribution -czvf build/cricket-scorer-api-$commitHash.tar .
+aws s3 cp build/cricket-scorer-api-$commitHash.tar s3://build-artefacts-${tagName}/cricket-scorer-api-$commitHash.tar

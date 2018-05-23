@@ -45,6 +45,11 @@ dependencies {
 	jooqRuntime "org.glassfish.jaxb:jaxb-runtime:2.2.11"
 }
 
+task installGitHooks(type: Copy) {
+	from new File(rootProject.rootDir, 'pre-push.sh')
+	into { new File(rootProject.rootDir, '.git/hooks') }
+}
+
 jooq {
 	cricketScorer(sourceSets.main) {
 		jdbc {
@@ -87,3 +92,4 @@ flyway {
 }
 
 generateCricketScorerJooqSchemaSource.dependsOn flywayMigrate
+build.dependsOn installGitHooks

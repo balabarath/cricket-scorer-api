@@ -1,0 +1,2 @@
+# run the tests with the gradle wrapper
+./gradlew test

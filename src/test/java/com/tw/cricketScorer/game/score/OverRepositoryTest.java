@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static cricketScorer.db.gen.tables.Over.OVER;
 import static junit.framework.TestCase.assertEquals;
@@ -38,6 +39,7 @@ public class OverRepositoryTest {
         GameRecord gameRecord = gameRepository.getGameInformation();
 
         OverRecord overRecord = new OverRecord();
+        overRecord.setId(UUID.randomUUID());
         overRecord.setNumber(1);
         overRecord.setTeamName(gameRecord.getTeam1());
         overRecord.setGame(gameRecord.getId());
@@ -55,6 +57,7 @@ public class OverRepositoryTest {
         GameRecord gameRecord = gameRepository.getGameInformation();
 
         OverRecord overRecord = new OverRecord();
+        overRecord.setId(UUID.randomUUID());
         overRecord.setNumber(1);
         overRecord.setTeamName(gameRecord.getTeam1());
         overRecord.setGame(gameRecord.getId());

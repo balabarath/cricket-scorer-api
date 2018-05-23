@@ -47,6 +47,7 @@ public class BallRepositoryTest {
         overRecord.setNumber(1);
         overRecord.setTeamName(game.getTeam1());
         overRecord.setGame(game.getId());
+        overRecord.setId(UUID.randomUUID());
         overRepository.save(overRecord);
 
 

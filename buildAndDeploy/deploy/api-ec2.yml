@@ -57,7 +57,7 @@ Resources:
               cd /home/ec2-user
               mkdir -p app
               cd app
-              wget https://s3.ap-south-1.amazonaws.com/build-artefacts-${tagName}/cricket-scorer-api-${commitHashOfDeployable}.tar
+              wget https://s3.amazonaws.com/build-artefacts-${tagName}/cricket-scorer-api-${commitHashOfDeployable}.tar
               tar -xzvf cricket-scorer-api-${commitHashOfDeployable}.tar
               /usr/local/bin/docker-compose up --build -d
 

@@ -33,6 +33,14 @@ public class PlayerRepositoryTest {
     }
 
     @Test
+    public void copyForTestShouldReturn11PlayersForATeam()
+    {
+        var players = playerRepository.getPlayers("Team 1");
+        assertEquals(11,players.size());
+
+    }
+
+    @Test
     public void shouldReturnPlayerRecordForGivenPlayerId() {
         var player = dsl.selectFrom(PLAYERS).fetchAny();
         var retPlayer = playerRepository.getPlayer(player.getId());

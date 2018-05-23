@@ -2,10 +2,10 @@ format_version: 2
 environments:
   ci:
     pipelines:
-      - "bootcamp"
+      - "api"
       
 pipelines:
-  "bootcamp":
+  "api":
     group: team1
     materials:
       ui:
@@ -18,7 +18,7 @@ pipelines:
                 - node-and-java
               tasks:
                 - script: |
-                    buildAndDeploy/build/build.sh bootcamp
+                    buildAndDeploy/build/build.sh team1
 
       - deploy:
            jobs:
@@ -27,4 +27,4 @@ pipelines:
                 - node-and-java
               tasks:
                 - script: |
-                    buildAndDeploy/deploy/deploy.sh bootcamp sethu-ec2-key-pair
+                    buildAndDeploy/deploy/deploy.sh team1 sethu-ec2-key-pair

@@ -29,7 +29,7 @@ public class BatsmanDetails {
         this.balls += 1;
         if(ballRecord.getScore() == 4) this.fours += 1;
         if(ballRecord.getScore() == 6) this.sixes += 1;
-        this.strikeRate = (this.runs/this.balls) * 100;
+        this.strikeRate = (Float.valueOf(this.runs)/this.balls) * 100;
     }
 
     public String getName() {

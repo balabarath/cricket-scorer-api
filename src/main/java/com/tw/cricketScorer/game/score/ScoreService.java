@@ -68,7 +68,7 @@ public class ScoreService {
         Optional<OverRecord> over = overRepository.getOverDetails(score.getOverNumber(),
                 batsman.getTeamName());
 
-        return over.orElse(createNewOverRecord(score, batsman));
+        return over.orElseGet(()->createNewOverRecord(score, batsman));
     }
 
     private OverRecord createNewOverRecord(Score score, PlayersRecord batsman) {

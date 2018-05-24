@@ -17,6 +17,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -41,6 +42,9 @@ public class ScoreServiceTest {
     @Captor
     private ArgumentCaptor<BallRecord> ballRecordArgumentCaptor;
 
+    @Captor
+    private ArgumentCaptor<OverRecord> overRecordArgumentCaptor;
+
 
     @Test
     public void shouldAddScoreToBallOverAndGameTable(){
@@ -53,12 +57,7 @@ public class ScoreServiceTest {
         UUID playerId = UUID.randomUUID();
 
 
-        GameRecord game = new GameRecord();
-        game.setId(gameId);
-        game.setTeam1("Team 1");
-        game.setTeam2("Team 2");
-        game.setTeam1Score(0);
-        game.setTeam2Score(0);
+        GameRecord game = getGameRecord(gameId);
 
         PlayersRecord player = new PlayersRecord(playerId, "Test Player", "Team 1");
 
@@ -84,6 +83,53 @@ public class ScoreServiceTest {
 
 
 
+    }
+
+    @Test
+    public void shouldCallOverSaveOnlyOnceForSameOverMultipleBalls(){
+
+        ScoreService scoreService = new ScoreService(ballRepository,overRepository,
+                gameRepository,playerRepository);
+
+        UUID gameId = UUID.randomUUID();
+        UUID overId = UUID.randomUUID();
+        UUID playerId = UUID.randomUUID();
+
+
+        GameRecord game = getGameRecord(gameId);
+
+        PlayersRecord player = new PlayersRecord(playerId, "Test Player", "Team 1");
+
+        Score score = new Score(playerId, 5, 4, gameId);
+
+        OverRecord over = new OverRecord(overId, score.getOverNumber(), player.getTeamName(), gameId);
+
+
+        Optional<OverRecord> overRecord = Optional.of(over);
+
+        when(playerRepository.getPlayer(playerId)).thenReturn(player);
+        when(overRepository.getOverDetails(score.getOverNumber(), player.getTeamName()))
+                .thenReturn(Optional.empty())
+                .thenReturn(overRecord);
+        when(gameRepository.getGameInformationForId(gameId)).thenReturn(game);
+
+        scoreService.addScore(score);
+
+        verify(overRepository,times(1)).save(overRecordArgumentCaptor.capture());
+        OverRecord capturedOverRecord = overRecordArgumentCaptor.getValue();
+        assertThat(capturedOverRecord.getNumber()).isEqualTo(over.getNumber());
+
+
+    }
+
+    private GameRecord getGameRecord(UUID gameId) {
+        GameRecord game = new GameRecord();
+        game.setId(gameId);
+        game.setTeam1("Team 1");
+        game.setTeam2("Team 2");
+        game.setTeam1Score(0);
+        game.setTeam2Score(0);
+        return game;
     }
 
 }

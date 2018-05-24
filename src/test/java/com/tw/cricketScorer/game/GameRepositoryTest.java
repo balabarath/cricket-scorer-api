@@ -56,4 +56,17 @@ public class GameRepositoryTest {
         assertEquals(game.getTeam1Score(),actualRecord.getTeam1Score());
         assertEquals(game.getTeam2Score(),actualRecord.getTeam2Score());
     }
+
+
+    @Test
+    public void shouldReturnTeam1AsCurrentBattingTeamWhenGameIsNotStarted() {
+
+        GameRecord game = dsl.selectFrom(GAME).fetchOne();
+        String team1 = game.getTeam1();
+        assertEquals(team1,gameRepository.getCurrentBattingTeam(game.getId()));
+
+    }
+
+
+
 }

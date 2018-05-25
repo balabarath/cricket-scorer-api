@@ -9,18 +9,18 @@ public class Score {
 
 
     private int score;
-    private int overNumber;
+    private int over;
     private UUID gameId;
 
-    private List<Batsman> curentBatsmen;
+    private List<Batsman> currentBatsmen;
 
     public Score() {
     }
 
-    public Score(List<Batsman> curentBatsmen, int score, int overNumber, UUID gameId) {
-        this.curentBatsmen = curentBatsmen;
+    public Score(List<Batsman> curentBatsmen, int score, int over, UUID gameId) {
+        this.currentBatsmen = curentBatsmen;
         this.score = score;
-        this.overNumber = overNumber;
+        this.over = over;
         this.gameId = gameId;
     }
 
@@ -30,16 +30,16 @@ public class Score {
         this.score = score;
     }
 
-    public void setOverNumber(int overNumber) {
-        this.overNumber = overNumber;
+    public void setOver(int over) {
+        this.over = over;
     }
 
     public Integer getScore() {
         return this.score;
     }
 
-    public Integer getOverNumber() {
-        return this.overNumber;
+    public Integer getOver() {
+        return this.over;
     }
 
     public void setGameId(UUID gameId) {
@@ -51,10 +51,10 @@ public class Score {
     }
 
     public UUID getBatsmanOnStrike() {
-        return curentBatsmen.stream().filter(batsman -> batsman.getOnStrike()).findFirst().get().getId();
+        return currentBatsmen.stream().filter(batsman -> batsman.getOnStrike()).findFirst().get().getId();
     }
 
-    public void setCurentBatsmen(List<Batsman> curentBatsmen) {
-        this.curentBatsmen = curentBatsmen;
+    public void setCurrentBatsmen(List<Batsman> currentBatsmen) {
+        this.currentBatsmen = currentBatsmen;
     }
 }

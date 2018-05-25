@@ -65,7 +65,7 @@ public class ScoreService {
     }
 
     private OverRecord createOverRecordIfNotExisting(Score score, PlayersRecord batsman) {
-        Optional<OverRecord> over = overRepository.getOverDetails(score.getOverNumber(),
+        Optional<OverRecord> over = overRepository.getOverDetails(score.getOver(),
                 batsman.getTeamName());
 
         return over.orElseGet(()->createNewOverRecord(score, batsman));
@@ -73,7 +73,7 @@ public class ScoreService {
 
     private OverRecord createNewOverRecord(Score score, PlayersRecord batsman) {
         OverRecord overRecord = new OverRecord(UUID.randomUUID(),
-                score.getOverNumber(),batsman.getTeamName(),score.getGameId());
+                score.getOver(),batsman.getTeamName(),score.getGameId());
         overRepository.save(overRecord);
         return overRecord;
     }

@@ -68,13 +68,13 @@ public class ScoreServiceTest {
                                               new Batsman(nonSrikerId,nonStriker.getName(),false)),
                                             5, 4, gameId);
 
-        OverRecord over = new OverRecord(overId, score.getOverNumber(), batsmanOnStrike.getTeamName(), gameId);
+        OverRecord over = new OverRecord(overId, score.getOver(), batsmanOnStrike.getTeamName(), gameId);
 
 
         Optional<OverRecord> overRecord = Optional.of(over);
 
         when(playerRepository.getPlayer(batsmanOnstrikeId)).thenReturn(batsmanOnStrike);
-        when(overRepository.getOverDetails(score.getOverNumber(), batsmanOnStrike.getTeamName())).thenReturn(overRecord);
+        when(overRepository.getOverDetails(score.getOver(), batsmanOnStrike.getTeamName())).thenReturn(overRecord);
         when(gameRepository.getGameInformationForId(gameId)).thenReturn(game);
 
         scoreService.addScore(score);
@@ -113,13 +113,13 @@ public class ScoreServiceTest {
                 5, 4, gameId);
 
 
-        OverRecord over = new OverRecord(overId, score.getOverNumber(), batsmanOnStrike.getTeamName(), gameId);
+        OverRecord over = new OverRecord(overId, score.getOver(), batsmanOnStrike.getTeamName(), gameId);
 
 
         Optional<OverRecord> overRecord = Optional.of(over);
 
         when(playerRepository.getPlayer(batsmanOnstrikeId)).thenReturn(batsmanOnStrike);
-        when(overRepository.getOverDetails(score.getOverNumber(), batsmanOnStrike.getTeamName()))
+        when(overRepository.getOverDetails(score.getOver(), batsmanOnStrike.getTeamName()))
                 .thenReturn(Optional.empty())
                 .thenReturn(overRecord);
         when(gameRepository.getGameInformationForId(gameId)).thenReturn(game);

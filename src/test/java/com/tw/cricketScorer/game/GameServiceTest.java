@@ -5,6 +5,7 @@ import com.tw.cricketScorer.player.Player;
 import com.tw.cricketScorer.player.PlayerRepository;
 import cricketScorer.db.gen.tables.records.BallRecord;
 import cricketScorer.db.gen.tables.records.GameRecord;
+import org.assertj.core.api.Assertions;
 import org.jooq.DSLContext;
 import org.jooq.Result;
 import org.junit.Test;
@@ -74,25 +75,24 @@ public class GameServiceTest {
     public void shouldReturnBatingTeamPlayersScoreDetails(){
 
         UUID playerId = UUID.randomUUID();
-        List<Player> playersForBattingTeam = new ArrayList<>();
         Player player = new Player(playerId,"Test Batsman");
+        List<Player> playersForBattingTeam = new ArrayList<>();
         playersForBattingTeam.add(player);
-
         List<BallRecord> ballRecordList = createBallRecords(playerId);
-
-        var gameId = UUID.randomUUID();
         GameService gameService = new GameService(gameRepository,playerRepository,ballRepository);
-
         BatsmanDetails batsmanDetails = new BatsmanDetails(playerId,"Test Name",10,2, 1, 1, "500");
-
+        var gameId = UUID.randomUUID();
         when(gameRepository.getCurrentBattingTeam(gameId)).thenReturn("Team 1");
         when(ballRepository.getPlayedBalls("Team 1")).thenReturn(ballRecordList);
         when(playerRepository.getPlayers("Team 1")).thenReturn(playersForBattingTeam);
 
         List<BatsmanDetails> team1BatsmanDetails = gameService.getBattingTeamScoreDetails(gameId);
 
-        assertEquals(batsmanDetails.getStrikeRate(), team1BatsmanDetails.get(0).getStrikeRate());
-
+        Assertions.assertThat(batsmanDetails.getStrikeRate()).isEqualTo(team1BatsmanDetails.get(0).getStrikeRate());
+        Assertions.assertThat(batsmanDetails.getRuns()).isEqualTo(team1BatsmanDetails.get(0).getRuns());
+        Assertions.assertThat(batsmanDetails.getSixes()).isEqualTo(team1BatsmanDetails.get(0).getSixes());
+        Assertions.assertThat(batsmanDetails.getFours()).isEqualTo(team1BatsmanDetails.get(0).getFours());
+        Assertions.assertThat(batsmanDetails.getBalls()).isEqualTo(team1BatsmanDetails.get(0).getBalls());
     }
 
     private List<BallRecord> createBallRecords(UUID playerId){

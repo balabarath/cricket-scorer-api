@@ -13,12 +13,16 @@ public class BatsmanDetailsTest {
     public void shouldUpdateBatsmanDetailsFromBallRecord(){
         BatsmanDetails batsmanDetails = new BatsmanDetails();
         BallRecord ballRecord = new BallRecord();
+
+        ballRecord.setBatsmanId(UUID.randomUUID());
         ballRecord.setScore(4);
         String batsmanName = "Test Name";
 
         batsmanDetails.buildFromBallRecord(ballRecord,batsmanName);
 
         assertTrue(ballRecord.getScore()==batsmanDetails.getRuns());
+        assertTrue(ballRecord.getBatsmanId()==batsmanDetails.getBatsmanId());
+
     }
 
 }

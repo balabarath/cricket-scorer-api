@@ -2,6 +2,8 @@ package com.tw.cricketScorer.game;
 
 import cricketScorer.db.gen.tables.records.BallRecord;
 
+import java.util.UUID;
+
 public class BatsmanDetails {
 
     private String name;
@@ -9,12 +11,14 @@ public class BatsmanDetails {
     private int balls;
     private int fours;
     private int sixes;
-    private float strikeRate;
+    private double strikeRate;
+    private UUID batsmanId;
 
     public BatsmanDetails() {
     }
 
-    public BatsmanDetails(String name, int runs, int balls, int fours, int sixes, float strikeRate) {
+    public BatsmanDetails(UUID batsmanId,String name, int runs, int balls, int fours, int sixes, float strikeRate) {
+        this.batsmanId = batsmanId;
         this.name = name;
         this.runs = runs;
         this.balls = balls;
@@ -24,6 +28,7 @@ public class BatsmanDetails {
     }
 
     public void buildFromBallRecord(BallRecord ballRecord, String name) {
+        this.batsmanId = ballRecord.getBatsmanId();
         this.name = name;
         this.runs += ballRecord.getScore();
         this.balls += 1;
@@ -56,7 +61,7 @@ public class BatsmanDetails {
         this.balls = balls;
     }
 
-    public float getStrikeRate() {
+    public double getStrikeRate() {
         return strikeRate;
     }
 
@@ -78,5 +83,13 @@ public class BatsmanDetails {
 
     public void setFours(int fours) {
         this.fours = fours;
+    }
+
+    public UUID getBatsmanId() {
+        return batsmanId;
+    }
+
+    public void setBatsmanId(UUID batsmanId) {
+        this.batsmanId = batsmanId;
     }
 }

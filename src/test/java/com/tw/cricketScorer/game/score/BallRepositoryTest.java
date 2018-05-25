@@ -4,6 +4,7 @@ import com.tw.cricketScorer.game.GameRepository;
 import cricketScorer.db.gen.tables.records.BallRecord;
 import cricketScorer.db.gen.tables.records.GameRecord;
 import cricketScorer.db.gen.tables.records.OverRecord;
+import org.assertj.core.api.Assertions;
 import org.jooq.DSLContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,29 +42,17 @@ public class BallRepositoryTest {
     public void shouldBeAbleToSaveBallInformation() {
 
         GameRecord game = gameRepository.getGameInformation();
-
-        OverRecord overRecord = new OverRecord();
-        overRecord.setNumber(1);
-        overRecord.setTeamName(game.getTeam1());
-        overRecord.setGame(game.getId());
-        overRecord.setId(UUID.randomUUID());
-        overRepository.save(overRecord);
-
-
-        OverRecord over = overRepository.getOverDetails(1, game.getTeam1()).get();
-        BallRecord ball = new BallRecord();
-
-        ball.setTeamName(game.getTeam1());
+        UUID overId = UUID.randomUUID();
+        OverRecord over = createOverRecord(1,game.getTeam1(),overId);
+        overRepository.save(over);
+        OverRecord fetchedOver = overRepository.getOverDetails(1, game.getTeam1()).get();
         UUID batsmanId = UUID.fromString("16a2a274-5bdb-11e8-9c2d-fa7ae01bbebc");
-        ball.setBatsmanId(batsmanId);
-        ball.setOverId(over.getId());
-        ball.setScore(6);
-
+        BallRecord ball = createBallRecord(game.getTeam1(),batsmanId,overId,6);
         ballRepository.save(ball);
 
         BallRecord retRecord = dslContext.selectFrom(BALL).fetchOne();
         assertEquals(batsmanId, retRecord.getBatsmanId());
-        assertEquals(over.getId(), retRecord.getOverId());
+        assertEquals(fetchedOver.getId(), retRecord.getOverId());
 
     }
 
@@ -72,29 +61,29 @@ public class BallRepositoryTest {
     public void shouldReturnCurrentlyPlayingAndAlreadyOutPlayersFromGivenTeam(){
 
         UUID overId = UUID.fromString("16a2a274-5bdb-11e8-9c2d-fa7ae01bbebd");
-        saveOverDetails(1, "Team 1", overId);
-        OverRecord over = overRepository.getOverDetails(1, "Team 1").get();
-        BallRecord ball = new BallRecord();
-
-        //TODO : CHECK WHY IT GOT FAILED FOR TWO BALLS
-
         UUID firstBatsmanId = UUID.fromString("16a2a274-5bdb-11e8-9c2d-fa7ae01bbebc");
         UUID secondBatsmanId = UUID.fromString("16a2a62a-5bdb-11e8-9c2d-fa7ae01bbebc");
-
+        OverRecord over = createOverRecord(1, "Team 1", overId);
+        overRepository.save(over);
         BallRecord firstBall = createBallRecord("Team 1", firstBatsmanId, overId, 10);
         BallRecord secondBall = createBallRecord("Team 1", secondBatsmanId, overId, 10);
-
         ballRepository.save(firstBall);
-       ballRepository.save(secondBall);
+        ballRepository.save(secondBall);
 
-        List<BallRecord> currentlyPlayingPlayers = ballRepository.getPlayedBalls("Team 1");
+        List<BallRecord> currentlyPlayedBalls = ballRepository.getPlayedBalls("Team 1");
 
-        assertEquals(firstBall.getBatsmanId(),    currentlyPlayingPlayers.get(0).getBatsmanId());
-       assertEquals(secondBall.getBatsmanId(),    currentlyPlayingPlayers.get(1).getBatsmanId());
+        Assertions.assertThat(firstBall.getBatsmanId()).isEqualTo(currentlyPlayedBalls.get(0).getBatsmanId());
+
+        Assertions.assertThat(secondBall.getBatsmanId()).isEqualTo(currentlyPlayedBalls.get(1).getBatsmanId());
+
+        assertEquals(firstBall.getBatsmanId(),    currentlyPlayedBalls.get(0).getBatsmanId());
+        assertEquals(firstBall.getTeamName(),    currentlyPlayedBalls.get(0).getTeamName());
+        assertEquals(secondBall.getBatsmanId(),    currentlyPlayedBalls.get(1).getBatsmanId());
+        assertEquals(secondBall.getTeamName(),    currentlyPlayedBalls.get(1).getTeamName());
 
     }
 
-    private void saveOverDetails(int overNumber,String teamName,UUID overId) {
+    private OverRecord createOverRecord(int overNumber, String teamName, UUID overId) {
 
         GameRecord game = gameRepository.getGameInformation();
 
@@ -103,8 +92,7 @@ public class BallRepositoryTest {
         overRecord.setTeamName(teamName);
         overRecord.setGame(game.getId());
         overRecord.setId(overId);
-        overRepository.save(overRecord);
-
+        return overRecord;
     }
 
     private BallRecord createBallRecord(String teamName, UUID batsmanId, UUID overId, int score) {

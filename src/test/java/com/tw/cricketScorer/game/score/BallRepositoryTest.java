@@ -5,7 +5,6 @@ import cricketScorer.db.gen.tables.records.BallRecord;
 import cricketScorer.db.gen.tables.records.GameRecord;
 import cricketScorer.db.gen.tables.records.OverRecord;
 import org.jooq.DSLContext;
-import org.jooq.Result;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,7 +87,7 @@ public class BallRepositoryTest {
         ballRepository.save(firstBall);
        ballRepository.save(secondBall);
 
-        List<BallRecord> currentlyPlayingPlayers = ballRepository.getCurrentlyPlayingPlayers("Team 1");
+        List<BallRecord> currentlyPlayingPlayers = ballRepository.getPlayedBalls("Team 1");
 
         assertEquals(firstBall.getBatsmanId(),    currentlyPlayingPlayers.get(0).getBatsmanId());
        assertEquals(secondBall.getBatsmanId(),    currentlyPlayingPlayers.get(1).getBatsmanId());

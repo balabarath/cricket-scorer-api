@@ -51,7 +51,7 @@ public class GameController {
     @GetMapping("/game/{id}/scoredetails")
     public List<BatsmanDetails> getBatsmenDetails(@PathVariable(value = "id") UUID gameId){
 
-        return gameService.getBattingTeamPlayerScoreDetails(gameId);
+        return gameService.getBattingTeamScoreDetails(gameId);
     }
 
 

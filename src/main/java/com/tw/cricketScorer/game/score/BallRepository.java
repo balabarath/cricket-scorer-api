@@ -30,7 +30,7 @@ public class BallRepository {
 
     }
 
-    public List<BallRecord> getCurrentlyPlayingPlayers(String team) {
+    public List<BallRecord> getPlayedBalls(String team) {
        return dsl.selectFrom(BALL).where(BALL.TEAM_NAME.eq(team)).fetchInto(BallRecord.class);
     }
 }

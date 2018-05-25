@@ -42,7 +42,6 @@ public class GameController {
             scoreService.addScore(score);
         }
         catch (Exception e) {
-            e.printStackTrace();
             return new ResponseEntity<>("failure", HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>("success", HttpStatus.ACCEPTED);

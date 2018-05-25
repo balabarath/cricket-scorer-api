@@ -50,6 +50,10 @@ task installGitHooks(type: Copy) {
 	into { new File(rootProject.rootDir, '.git/hooks') }
 }
 
+task cleanGeneratedFiles(type: Delete) {
+	delete "src/main/generated"
+}
+
 jooq {
 	cricketScorer(sourceSets.main) {
 		jdbc {
@@ -91,5 +95,6 @@ flyway {
 	locations = ["filesystem:$project.projectDir/src/main/resources/db/migration"]
 }
 
+flywayMigrate.dependsOn cleanGeneratedFiles
 generateCricketScorerJooqSchemaSource.dependsOn flywayMigrate
 build.dependsOn installGitHooks

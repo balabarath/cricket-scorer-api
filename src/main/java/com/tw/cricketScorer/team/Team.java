@@ -3,6 +3,8 @@ package com.tw.cricketScorer.team;
 import com.tw.cricketScorer.player.Player;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class Team {
@@ -31,8 +33,7 @@ public class Team {
     }
 
     public List<Player> getPlayers() {
-        return players.stream().map(s-> new Player(s.getId(),s.getName()))
-                .collect(Collectors.toList());
+        return players;
     }
 
     public String getName() {
@@ -67,6 +68,11 @@ public class Team {
 
     public void setOvers(int overs) {
         this.overs = overs;
+    }
+
+    public Optional<Player> find(UUID playerId)
+    {
+        return players.stream().filter(player -> player.getId().equals(playerId)).findFirst();
     }
 
     public boolean getIsPlaying(){

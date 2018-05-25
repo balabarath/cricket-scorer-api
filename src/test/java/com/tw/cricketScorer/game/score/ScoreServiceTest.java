@@ -1,5 +1,6 @@
 package com.tw.cricketScorer.game.score;
 
+import com.tw.cricketScorer.game.Batsman;
 import com.tw.cricketScorer.game.GameRepository;
 import com.tw.cricketScorer.player.PlayerRepository;
 import cricketScorer.db.gen.tables.records.BallRecord;
@@ -13,8 +14,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
@@ -54,22 +54,27 @@ public class ScoreServiceTest {
 
         UUID gameId = UUID.randomUUID();
         UUID overId = UUID.randomUUID();
-        UUID playerId = UUID.randomUUID();
+        UUID batsmanOnstrikeId = UUID.randomUUID();
+        UUID nonSrikerId = UUID.randomUUID();
+
 
 
         GameRecord game = getGameRecord(gameId);
 
-        PlayersRecord player = new PlayersRecord(playerId, "Test Player", "Team 1");
+        PlayersRecord batsmanOnStrike = new PlayersRecord(batsmanOnstrikeId, "Test Batsman", "Team 1");
+        PlayersRecord nonStriker = new PlayersRecord(nonSrikerId, "Test Batsman2", "Team 1");
 
-        Score score = new Score(playerId, 5, 4, gameId);
+        Score score = new Score(Arrays.asList(new Batsman(batsmanOnstrikeId,batsmanOnStrike.getName(),true),
+                                              new Batsman(nonSrikerId,nonStriker.getName(),false)),
+                                            5, 4, gameId);
 
-        OverRecord over = new OverRecord(overId, score.getOverNumber(), player.getTeamName(), gameId);
+        OverRecord over = new OverRecord(overId, score.getOverNumber(), batsmanOnStrike.getTeamName(), gameId);
 
 
         Optional<OverRecord> overRecord = Optional.of(over);
 
-        when(playerRepository.getPlayer(playerId)).thenReturn(player);
-        when(overRepository.getOverDetails(score.getOverNumber(), player.getTeamName())).thenReturn(overRecord);
+        when(playerRepository.getPlayer(batsmanOnstrikeId)).thenReturn(batsmanOnStrike);
+        when(overRepository.getOverDetails(score.getOverNumber(), batsmanOnStrike.getTeamName())).thenReturn(overRecord);
         when(gameRepository.getGameInformationForId(gameId)).thenReturn(game);
 
         scoreService.addScore(score);
@@ -93,22 +98,28 @@ public class ScoreServiceTest {
 
         UUID gameId = UUID.randomUUID();
         UUID overId = UUID.randomUUID();
-        UUID playerId = UUID.randomUUID();
+        UUID batsmanOnstrikeId = UUID.randomUUID();
+        UUID nonSrikerId = UUID.randomUUID();
+
 
 
         GameRecord game = getGameRecord(gameId);
 
-        PlayersRecord player = new PlayersRecord(playerId, "Test Player", "Team 1");
+        PlayersRecord batsmanOnStrike = new PlayersRecord(batsmanOnstrikeId, "Test Batsman", "Team 1");
+        PlayersRecord nonStriker = new PlayersRecord(nonSrikerId, "Test Batsman2", "Team 1");
 
-        Score score = new Score(playerId, 5, 4, gameId);
+        Score score = new Score(Arrays.asList(new Batsman(batsmanOnstrikeId,batsmanOnStrike.getName(),true),
+                new Batsman(nonSrikerId,nonStriker.getName(),false)),
+                5, 4, gameId);
 
-        OverRecord over = new OverRecord(overId, score.getOverNumber(), player.getTeamName(), gameId);
+
+        OverRecord over = new OverRecord(overId, score.getOverNumber(), batsmanOnStrike.getTeamName(), gameId);
 
 
         Optional<OverRecord> overRecord = Optional.of(over);
 
-        when(playerRepository.getPlayer(playerId)).thenReturn(player);
-        when(overRepository.getOverDetails(score.getOverNumber(), player.getTeamName()))
+        when(playerRepository.getPlayer(batsmanOnstrikeId)).thenReturn(batsmanOnStrike);
+        when(overRepository.getOverDetails(score.getOverNumber(), batsmanOnStrike.getTeamName()))
                 .thenReturn(Optional.empty())
                 .thenReturn(overRecord);
         when(gameRepository.getGameInformationForId(gameId)).thenReturn(game);

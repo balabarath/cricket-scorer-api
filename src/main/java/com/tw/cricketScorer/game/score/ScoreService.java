@@ -31,7 +31,7 @@ public class ScoreService {
 
     @Transactional
     public void addScore(Score score) {
-        PlayersRecord batsman = playerRepository.getPlayer(score.getPlayerId());
+        PlayersRecord batsman = playerRepository.getPlayer(score.getBatsmanOnStrike());
 
         OverRecord over = createOverRecordIfNotExisting(score, batsman);
 

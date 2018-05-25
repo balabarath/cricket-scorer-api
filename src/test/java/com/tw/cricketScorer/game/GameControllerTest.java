@@ -19,6 +19,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
@@ -46,7 +48,8 @@ public class GameControllerTest {
         GameController gameController = new GameController(gameRepository,playerRepository,scoreService, gameService);
         UUID gameId = UUID.randomUUID();
         UUID playerId = UUID.randomUUID();
-        Score score = new Score(playerId, 5, 4, gameId);
+        List<Batsman> batsmen = new ArrayList<>();
+        Score score = new Score(batsmen, 5, 4, gameId);
         gameController.addScore(gameId.toString(),score);
 
         verify(scoreService).addScore(score);

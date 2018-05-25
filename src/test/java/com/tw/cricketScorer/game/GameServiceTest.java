@@ -56,8 +56,10 @@ public class GameServiceTest {
         when(gameRecord.getTeam1Wickets()).thenReturn(0);
         when(gameRecord.getTeam2Wickets()).thenReturn(0);
         when(gameRepository.getGameInformation()).thenReturn(gameRecord);
-        when(playerRepository.getPlayers("Team 1")).thenReturn(Arrays.asList(new Player(newplayyer1UUID,"Sarang")));
-        when(playerRepository.getPlayers("Team 2")).thenReturn(Arrays.asList(new Player(newplayyer2UUID,"Sethu")));
+        when(playerRepository.getPlayers("Team 1")).thenReturn(Arrays.asList(new Player(newplayyer1UUID,"Sarang")
+                                                                                       ,new Player(UUID.randomUUID(),"Charu")));
+        when(playerRepository.getPlayers("Team 2")).thenReturn(Arrays.asList(new Player(newplayyer2UUID,"Sethu"),
+                                                                                      new Player(UUID.randomUUID(),"Bala")));
 
         var service = new GameService(gameRepository,playerRepository,ballRepository);
         var game = service.getGameRecord();
@@ -73,7 +75,7 @@ public class GameServiceTest {
 
         UUID playerId = UUID.randomUUID();
         List<Player> playersForBattingTeam = new ArrayList<>();
-        Player player = new Player(playerId,"Test Player");
+        Player player = new Player(playerId,"Test Batsman");
         playersForBattingTeam.add(player);
 
         List<BallRecord> ballRecordList = createBallRecords(playerId);

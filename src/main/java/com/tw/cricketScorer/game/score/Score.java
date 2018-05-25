@@ -1,27 +1,30 @@
 package com.tw.cricketScorer.game.score;
 
+import com.tw.cricketScorer.game.Batsman;
+
+import java.util.List;
 import java.util.UUID;
 
 public class Score {
 
-    private UUID playerId;
+
     private int score;
     private int overNumber;
     private UUID gameId;
 
+    private List<Batsman> curentBatsmen;
+
     public Score() {
     }
 
-    public Score(UUID playerId, int score, int overNumber, UUID gameId) {
-        this.playerId = playerId;
+    public Score(List<Batsman> curentBatsmen, int score, int overNumber, UUID gameId) {
+        this.curentBatsmen = curentBatsmen;
         this.score = score;
         this.overNumber = overNumber;
         this.gameId = gameId;
     }
 
-    public void setPlayerId(UUID id) {
-        this.playerId = id;
-    }
+
 
     public void setScore(int score) {
         this.score = score;
@@ -47,7 +50,11 @@ public class Score {
         return gameId;
     }
 
-    public UUID getPlayerId() {
-        return playerId;
+    public UUID getBatsmanOnStrike() {
+        return curentBatsmen.stream().filter(batsman -> batsman.getOnStrike()).findFirst().get().getId();
+    }
+
+    public void setCurentBatsmen(List<Batsman> curentBatsmen) {
+        this.curentBatsmen = curentBatsmen;
     }
 }

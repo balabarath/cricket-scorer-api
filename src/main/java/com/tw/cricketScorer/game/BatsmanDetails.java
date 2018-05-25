@@ -2,6 +2,8 @@ package com.tw.cricketScorer.game;
 
 import cricketScorer.db.gen.tables.records.BallRecord;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.UUID;
 
 public class BatsmanDetails {
@@ -11,13 +13,13 @@ public class BatsmanDetails {
     private int balls;
     private int fours;
     private int sixes;
-    private double strikeRate;
+    private String strikeRate;
     private UUID batsmanId;
 
     public BatsmanDetails() {
     }
 
-    public BatsmanDetails(UUID batsmanId,String name, int runs, int balls, int fours, int sixes, float strikeRate) {
+    public BatsmanDetails(UUID batsmanId,String name, int runs, int balls, int fours, int sixes, String strikeRate) {
         this.batsmanId = batsmanId;
         this.name = name;
         this.runs = runs;
@@ -34,7 +36,10 @@ public class BatsmanDetails {
         this.balls += 1;
         if(ballRecord.getScore() == 4) this.fours += 1;
         if(ballRecord.getScore() == 6) this.sixes += 1;
-        this.strikeRate = (Float.valueOf(this.runs)/this.balls) * 100;
+        this.strikeRate = new BigDecimal(String.valueOf((Float.valueOf(this.runs)/this.balls)*100))
+                .setScale(2, RoundingMode.HALF_UP)
+                .toPlainString()
+                .replaceAll("\\.00","");
     }
 
     public String getName() {
@@ -61,11 +66,11 @@ public class BatsmanDetails {
         this.balls = balls;
     }
 
-    public double getStrikeRate() {
+    public String getStrikeRate() {
         return strikeRate;
     }
 
-    public void setStrikeRate(float strikeRate) {
+    public void setStrikeRate(String strikeRate) {
         this.strikeRate = strikeRate;
     }
 

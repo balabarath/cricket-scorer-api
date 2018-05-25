@@ -83,7 +83,7 @@ public class GameServiceTest {
         var gameId = UUID.randomUUID();
         GameService gameService = new GameService(gameRepository,playerRepository,ballRepository);
 
-        BatsmanDetails batsmanDetails = new BatsmanDetails(playerId,"Test Name",10,2, 1, 1, 500);
+        BatsmanDetails batsmanDetails = new BatsmanDetails(playerId,"Test Name",10,2, 1, 1, "500");
 
         when(gameRepository.getCurrentBattingTeam(gameId)).thenReturn("Team 1");
         when(ballRepository.getPlayedBalls("Team 1")).thenReturn(ballRecordList);
@@ -91,7 +91,7 @@ public class GameServiceTest {
 
         List<BatsmanDetails> team1BatsmanDetails = gameService.getBattingTeamScoreDetails(gameId);
 
-        assertTrue(batsmanDetails.getStrikeRate()==team1BatsmanDetails.get(0).getStrikeRate());
+        assertEquals(batsmanDetails.getStrikeRate(), team1BatsmanDetails.get(0).getStrikeRate());
 
     }
 
